@@ -33,6 +33,21 @@ async fn main() -> std::io::Result<()> {
     .await
 }
 
+#[cfg(feature = "ssr")]{
+use llm::models::Llama;
+use actix_web::*;
+use std::env;
+use dotenv::dotenv;
+
+fn get_language_model() -> Llama{
+
+    use std::path::PathBuf;
+    dotenv().ok();
+    let model_path = env::var(""MODEL_PATH).expect("MODEL_PATH muse be set");
+    
+}
+}
+
 #[cfg(feature = "ssr")]
 #[actix_web::get("favicon.ico")]
 async fn favicon(

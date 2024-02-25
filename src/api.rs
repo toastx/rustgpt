@@ -32,7 +32,7 @@ pub async fn converse(prompt:Conversation) -> Result<String, ServerFnError>{
         else{
             format!("{user_name}:{msg}\n")  
         };
-        history.push(&current_line);
+        history.push_str(&current_line);
     }
 
     let mut res = String::new();
@@ -53,7 +53,10 @@ pub async fn converse(prompt:Conversation) -> Result<String, ServerFnError>{
         inference_callback(String::from(user_name), &mut buf, &mut res),
 
     )
-    .unwrap_or_else(|e| panic("|{e}"))
+    .unwrap_or_else(|e| panic("{e}")
+
+    Ok(res)
+)
 
 }
 
@@ -77,8 +80,6 @@ fn inference_callback<'a>(
                 buf.push_str(t.as_str());
                 return Ok(Continue);
             }
-
-            // Clone the string we're going to send
             let text_to_send = if buf.is_empty() {
                 t.clone()
             } else {

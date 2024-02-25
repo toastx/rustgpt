@@ -47,7 +47,8 @@ pub async fn converse(prompt:Conversation) -> Result<String, ServerFnError>{
         &llm::InferenceRequest{
             prompt: format!("{history}\n{user_name}").as_str().into(),
             parameters : &llm::InferenceParameters::default(),
-            maximum_token_count: None
+            maximum_token_count: None,
+            play_back_previous_tokens: false,
         },
         &mut Default::default(),
         inference_callback(String::from(user_name), &mut buf, &mut res),
